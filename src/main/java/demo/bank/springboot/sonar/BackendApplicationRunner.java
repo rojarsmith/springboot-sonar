@@ -20,10 +20,14 @@ public class BackendApplicationRunner implements ApplicationRunner {
 
 	@Value("${spring.profiles.active}")
 	private String propertiesActive;
+	
+	@Value("${properties.name}")
+	private String propertiesName;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		log.info("[InitialApplication] {}", propertiesActive);
+		log.info("[BackendApplicationRunner] {}", propertiesActive);
+		log.info("[BackendApplicationRunner] {}", propertiesName);
 	}
 
 }

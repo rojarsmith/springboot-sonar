@@ -1,0 +1,36 @@
+module.exports ={
+   "apps":[
+      {
+         "name":"springboot-sonar",
+         "script":"java",
+         "args":[
+            "-jar",
+            "~/app/springboot-sonar/springboot-sonar.jar",
+            "--spring.config.location=~/app/springboot-sonar/config/application-prod.properties"
+         ],
+         "exec_interpreter":"",
+         "exec_mode":"fork"
+      }
+   ],
+   deploy: {
+	 server1:{
+            // the user to login and rum pm2
+            user: 'root',
+            // support deploying to multi host
+            host: ['$SERVER_IP'],
+            // url of git repository
+            repo: 'git@github.com:rojarsmith/springboot-sonar.git',
+            // branch to deply
+            ref: 'origin/main',
+			//ref: 'tags/TAG1',
+			//ref: '79a9a955e5957ec2afb3806290617de327a5e851',
+            // deploy path at server
+            path: '~/app/springboot-sonar/main',
+			// Running after pm2 clone project at remote
+			'post-setup': 'echo nothing to do at post-setup',
+			// Running after deploying at remote
+			'post-deploy': 'chmod +x gradlew;./gradlew build;find build/libs -name \'*.jar\' ! -name \'*plain.jar\' | xargs -i cp -f {} ../;rm -f ../springboot-sonar.jar;find ../ -maxdepth 1 -name \'*.jar\' |  xargs -i mv {} ../springboot-sonar.jar;pm2 startOrRestart ecosystem.config.js springboot-sonar'
+	 }  
+   }
+   
+}
