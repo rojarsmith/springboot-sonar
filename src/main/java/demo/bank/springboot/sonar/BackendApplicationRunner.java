@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
-@Profile({ "default" })
+@Profile({ "default", "prod", "dev", "test" })
 public class BackendApplicationRunner implements ApplicationRunner {
 
 	@Value("${spring.profiles.active}")
@@ -23,8 +23,7 @@ public class BackendApplicationRunner implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		log.debug("[InitialApplication] {}", propertiesActive);
-		System.out.println("propertiesActive=" + propertiesActive);
+		log.info("[InitialApplication] {}", propertiesActive);
 	}
 
 }
