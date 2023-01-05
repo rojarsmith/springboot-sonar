@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
+@WebSocketEndpoint("/ws")
 public class BackendWebSocketHandler implements WebSocketHandler {
 
 	private final ConcurrentHashMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
